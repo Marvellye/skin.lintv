@@ -13,27 +13,29 @@
                 <fadetime>600</fadetime>
             </control>
 
-            <!-- 2. TEXT PROTECTION GRADIENT (Left Side & Bottom) -->
-            <!-- This ensures the title and plot are visible even on white backgrounds -->
+            <!-- 2. TEXT PROTECTION GRADIENTS -->
             <control type="image">
                 <left>0</left>
                 <top>0</top>
                 <width>1200</width>
                 <height>100%</height>
-                <texture border="0,0,100,0">common/gradient_left.png</texture> <!-- Gradient: Black on left to Transparent on right -->
+                <texture border="0,0,100,0">common/gradient_left.png</texture>
                 <colordiffuse>CC000000</colordiffuse>
             </control>
             <control type="image">
                 <include>FullScreenDimensions</include>
-                <texture border="0,100,0,0">common/gradient_bottom.png</texture> <!-- Gradient: Black at bottom to Transparent at top -->
+                <texture border="0,100,0,0">common/gradient_bottom.png</texture>
                 <colordiffuse>AA000000</colordiffuse>
             </control>
         </control>
 
-        <!-- 3. TOP NAVIGATION (The Pill Menu) -->
+        <!-- 3. TOP NAVIGATION BAR -->
         <control type="group">
             <top>60</top>
             <left>90</left>
+            <right>90</right>
+            
+            <!-- Google TV Logo -->
             <control type="label">
                 <width>250</width>
                 <height>60</height>
@@ -41,12 +43,14 @@
                 <label>Google TV</label>
                 <textcolor>ffffffff</textcolor>
             </control>
+
+            <!-- Main Menu (id: 9000) -->
             <control type="list" id="9000">
                 <left>250</left>
                 <width>1200</width>
                 <height>80</height>
                 <onleft>9000</onleft>
-                <onright>9000</onright>
+                <onright>802</onright> <!-- Link to Settings Button -->
                 <ondown>5100</ondown>
                 <orientation>horizontal</orientation>
                 <itemlayout width="180" height="60">
@@ -95,48 +99,59 @@
                     <item><label>Apps</label><onclick>ActivateWindow(1100)</onclick></item>
                 </content>
             </control>
-			<control type="list">
-                <top>60</top>
-                <left>100</left>
+
+            <!-- SETTINGS & TIME (Right Aligned) -->
+            <control type="group">
+                <left>1550</left> <!-- Moves this group to the right side -->
+                <top>0</top>
+                
+                <!-- Settings Button (id: 802) -->
                 <control type="button" id="802">
                     <width>50</width>
                     <height>50</height>
+                    <top>5</top>
                     <texturefocus>icons/settings.png</texturefocus>
                     <texturenofocus colordiffuse="88ffffff">icons/settings.png</texturenofocus>
                     <onclick>ActivateWindow(settings)</onclick>
                     <onleft>9000</onleft>
+                    <ondown>5100</ondown>
                 </control>
+
+                <!-- Time Display -->
                 <control type="label">
                     <left>70</left>
                     <width>200</width>
-                    <height>50</height>
+                    <height>60</height>
                     <font>font15_bold</font>
                     <label>$INFO[System.Time]</label>
+                    <textcolor>ffffffff</textcolor>
+                    <aligny>center</aligny>
                 </control>
-			</control>
+            </control>
         </control>
 
-        <!-- 4. HERO SECTION (BIGGER FONTS + SHADOWS) -->
+        <!-- 4. HERO SECTION -->
         <control type="group">
             <top>250</top>
             <left>90</left>
             <control type="label">
                 <width>1400</width>
                 <height>120</height>
-                <font>font60_bold</font> <!-- UPDATED: Using the biggest possible font -->
+                <!-- Note: Ensure font60_bold exists in Font.xml, otherwise use font_huge -->
+                <font>font60_bold</font> 
                 <label>$INFO[Container(5100).ListItem.Label]</label>
                 <textcolor>ffffffff</textcolor>
                 <shadowcolor>ff000000</shadowcolor>
             </control>
             <control type="label">
-                <top>125</top>
+                <top>115</top> <!-- Adjusted for larger font -->
                 <width>1200</width>
                 <font>font16</font>
                 <textcolor>ccffffff</textcolor>
                 <label>$INFO[Container(5100).ListItem.Tagline]</label>
             </control>
             <control type="textbox">
-                <top>175</top>
+                <top>170</top>
                 <width>950</width>
                 <height>130</height>
                 <font>font14</font>
@@ -147,7 +162,7 @@
             </control>
         </control>
 
-        <!-- 5. TOP PICKS (FIXED ROUNDED CORNERS) -->
+        <!-- 5. TOP PICKS -->
         <control type="group">
             <top>620</top>
             <left>90</left>
@@ -169,7 +184,6 @@
                         <height>247</height>
                         <texture background="true">$INFO[ListItem.Art(landscape)]</texture>
                         <aspectratio>scale</aspectratio>
-                        <!-- ROUNDED FIX: Make sure this file exists in your media folder! -->
                         <diffuse>common/rounded_mask_landscape.png</diffuse>
                     </control>
                 </itemlayout>
@@ -186,7 +200,6 @@
                             <diffuse>common/rounded_mask_landscape.png</diffuse>
                         </control>
 
-                        <!-- GLOW FOCUS BORDER: This adds a rounded glow effect -->
                         <control type="image">
                             <left>-10</left>
                             <top>-10</top>
@@ -236,7 +249,6 @@
                             <aspectratio>keep</aspectratio>
                             <diffuse>common/squircle_mask.png</diffuse>
                         </control>
-                        <!-- ADDED FOCUS EFFECT FOR APPS -->
                         <control type="image">
                             <width>150</width>
                             <height>150</height>
@@ -248,6 +260,5 @@
                 <content>addons://sources/video/</content>
             </control>
         </control>
-
     </controls>
 </window>
