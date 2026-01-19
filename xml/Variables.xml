@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
+	<variable name="GoogleTVFanartVar">
+		<!-- If hovering on Top Picks, show that movie's fanart -->
+		<value condition="Control.HasFocus(5100)">$INFO[Container(5100).ListItem.Art(fanart)]</value>
+		<!-- If hovering on Apps, show the app's fanart or a default -->
+		<value condition="Control.HasFocus(5200)">$INFO[Container(5200).ListItem.Art(fanart)]</value>
+		<!-- Fallback -->
+		<value>$VAR[HomeFanartVar]</value>
+	</variable>
 	<variable name="PVRStatusImageVar">
 		<value condition="ListItem.IsRecording">windows/pvr/record.png</value>
 		<value condition="ListItem.HasTimer | ListItem.HasTimerSchedule">windows/pvr/timer.png</value>
