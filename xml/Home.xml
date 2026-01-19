@@ -172,22 +172,21 @@
                 <textcolor>88ffffff</textcolor>
             </control>
             <control type="panel" id="5100">
-                <top>50</top>
+                <top>80</top>
                 <width>1800</width>
                 <height>300</height>
                 <onup>9000</onup>
                 <ondown>5200</ondown>
                 <orientation>horizontal</orientation>
-                <itemlayout width="460" height="260">
+                <itemlayout width="448" height="260">
                     <control type="image">
                         <width>440</width>
                         <height>247</height>
-                        <texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+                        <texture diffuse="common/rounded_mask_landscape.png" background="true" border="12">$INFO[ListItem.Art(landscape)]</texture>
                         <aspectratio>scale</aspectratio>
-                        <diffuse>common/rounded_mask_landscape.png</diffuse>
                     </control>
                 </itemlayout>
-                <focusedlayout width="460" height="260">
+                <focusedlayout width="448" height="260">
                     <control type="group">
                         <animation effect="zoom" start="100" end="108" time="300" tween="sine" easing="inout" center="auto">Focus</animation>
                         <animation effect="zoom" start="108" end="100" time="250" tween="sine" easing="inout" center="auto">UnFocus</animation>
@@ -195,9 +194,8 @@
                         <control type="image">
                             <width>440</width>
                             <height>247</height>
-                            <texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+                            <texture diffuse="common/rounded_mask_landscape.png" background="true" border="12">$INFO[ListItem.Art(landscape)]</texture>
                             <aspectratio>scale</aspectratio>
-                            <diffuse>common/rounded_mask_landscape.png</diffuse>
                         </control>
 
                         <control type="image">
@@ -205,7 +203,7 @@
                             <top>-10</top>
                             <width>460</width>
                             <height>267</height>
-                            <texture border="30">common/rounded_focus_glow.png</texture>
+                            <!-- <texture border="30">common/rounded_focus_glow.png</texture> -->
                             <colordiffuse>ffffffff</colordiffuse>
                             <visible>Control.HasFocus(5100)</visible>
                         </control>
