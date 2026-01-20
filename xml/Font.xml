@@ -27,6 +27,11 @@
 			<style>lighten</style>
 		</font>
 		<font>
+			<name>fontMenu_Bold</name>
+			<filename>GoogleSans-Bold.ttf</filename>
+			<size>33</size>
+		</font>
+		<font>
 			<name>font25_narrow</name>
 			<filename>GoogleSans-Regular.ttf</filename>
 			<size>25</size>

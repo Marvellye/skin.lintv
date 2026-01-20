@@ -8,6 +8,22 @@
 		<!-- Fallback -->
 		<value>$VAR[HomeFanartVar]</value>
 	</variable>
+	<variable name="HeroResolutionFlagVar">
+		<!-- 4K Logic -->
+		<value condition="Integer.IsGreater(Container(5100).ListItem.VideoResolution,1080) | String.IsEqual(Container(5100).ListItem.VideoResolution,4K)">flags/quality/4k.png</value>
+		<!-- Full HD (1080) -->
+		<value condition="Integer.IsGreater(Container(5100).ListItem.VideoResolution,720)">flags/quality/fhd.png</value>
+		<!-- HD (720) -->
+		<value condition="Integer.IsGreater(Container(5100).ListItem.VideoResolution,719)">flags/quality/hd.png</value>
+		<!-- SD Catch-all -->
+		<value condition="!String.IsEmpty(Container(5100).ListItem.VideoResolution)">flags/quality/sd.png</value>
+		<!-- Fallback -->
+		<value>flags/quality/info.png</value>
+	</variable>
+	<variable name="HeroRatingValueVar">
+		<value condition="!String.IsEmpty(Container(5100).ListItem.Property(TMDbHelper.Rating.TMDb))">$INFO[Container(5100).ListItem.Property(TMDbHelper.Rating.TMDb)]</value>
+		<value>$INFO[Container(5100).ListItem.Rating]</value>
+	</variable>
 	<variable name="PVRStatusImageVar">
 		<value condition="ListItem.IsRecording">windows/pvr/record.png</value>
 		<value condition="ListItem.HasTimer | ListItem.HasTimerSchedule">windows/pvr/timer.png</value>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol>9000</defaultcontrol>
+    <onload>Control.SetFocus(9000,1)</onload> 
     <backgroundcolor>background</backgroundcolor>
     <controls>
         
-        <!-- 1. DYNAMIC BACKGROUND (Sharp and Clear) -->
+        <!-- 1. DYNAMIC BACKGROUND -->
         <control type="group">
             <control type="image">
                 <include>FullScreenDimensions</include>
@@ -13,23 +14,20 @@
                 <fadetime>600</fadetime>
             </control>
 
-            <!-- 2. TEXT PROTECTION (Inspired by Arctic Horizon 2) -->
-            <!-- Using a Vignette instead of a flat overlay keeps the top-right sharp -->
+            <!-- 2. TEXT PROTECTION (Vignette) -->
             <control type="image">
                 <include>FullScreenDimensions</include>
                 <texture border="0,0,100,0">common/gradient_vignette.png</texture> 
-                <!-- This PNG should be black on the bottom-left and transparent on the top-right -->
                 <colordiffuse>DD000000</colordiffuse>
             </control>
         </control>
 
-        <!-- 3. TOP NAVIGATION & SYSTEM INFO -->
+        <!-- 3. TOP NAVIGATION BAR -->
         <control type="group">
             <top>60</top>
             <left>90</left>
             <right>90</right>
             
-            <!-- Google TV Logo -->
             <control type="label">
                 <width>250</width>
                 <height>60</height>
@@ -38,11 +36,11 @@
                 <textcolor>ffffffff</textcolor>
             </control>
 
-            <!-- Main Menu (id: 9000) -->
             <control type="list" id="9000">
                 <left>250</left>
                 <width>1200</width>
                 <height>80</height>
+				<focusposition>1</focusposition> 
                 <onleft>9000</onleft>
                 <onright>802</onright> 
                 <ondown>5100</ondown>
@@ -63,14 +61,15 @@
                         <height>54</height>
                         <top>3</top>
                         <left>10</left>
-                        <texture border="1">common/white_pill.png</texture> 
+                        <texture>common/white_pill.png</texture> 
                         <visible>Control.HasFocus(9000)</visible>
                     </control>
                     <control type="label">
+                        <top>-3</top>
                         <width>180</width>
                         <height>60</height>
                         <align>center</align>
-                        <font>font14_bold</font>
+                        <font>fontMenu_Bold</font>
                         <textcolor>ff121212</textcolor>
                         <label>$INFO[ListItem.Label]</label>
                         <visible>Control.HasFocus(9000)</visible>
@@ -87,19 +86,17 @@
                 </focusedlayout>
                 <content>
                     <item><label>Search</label><onclick>ActivateWindow(1107)</onclick></item>
-                    <item><label>For you</label><onclick>SetFocus(5100)</onclick></item>
+                    <item ><label>For you</label><onclick>SetFocus(5100)</onclick></item>
                     <item><label>Live</label><onclick>ActivateWindow(TVChannels)</onclick></item>
                     <item><label>Movies</label><onclick>ActivateWindow(Videos,videodb://movies/)</onclick></item>
                     <item><label>Apps</label><onclick>ActivateWindow(1100)</onclick></item>
                 </content>
             </control>
 
-            <!-- SETTINGS & TIME (Top Right Fix) -->
             <control type="group">
                 <left>1600</left> 
                 <width>250</width>
                 <height>60</height>
-                
                 <control type="button" id="802">
                     <width>50</width>
                     <height>50</height>
@@ -110,7 +107,6 @@
                     <onleft>9000</onleft>
                     <ondown>5100</ondown>
                 </control>
-
                 <control type="label">
                     <left>70</left>
                     <width>200</width>
@@ -123,45 +119,141 @@
             </control>
         </control>
 
-        <!-- 4. HERO SECTION (AH2 Style Large Fonts) -->
-        <control type="group">
-            <top>250</top>
-            <left>90</left>
-            <control type="label">
-                <width>1400</width>
-                <height>120</height>
-                <font>font60_bold</font> 
-                <label>$INFO[Container(5100).ListItem.Label]</label>
-                <textcolor>ffffffff</textcolor>
-                <shadowcolor>ff000000</shadowcolor>
-            </control>
-            <control type="label">
-                <top>115</top>
-                <width>1200</width>
-                <font>font16</font>
-                <textcolor>ccffffff</textcolor>
-                <label>$INFO[Container(5100).ListItem.Tagline]</label>
-            </control>
-            <control type="textbox">
-                <top>170</top>
-                <width>950</width>
-                <height>130</height>
-                <font>font14</font>
-                <textcolor>bbffffff</textcolor>
-                <label>$INFO[Container(5100).ListItem.Plot]</label>
-                <linespacing>1.1</linespacing>
-                <shadowcolor>88000000</shadowcolor>
-            </control>
-        </control>
+        <!-- 4. HERO SECTION (Refined Alignment and Scaling) -->
+		<control type="group">
+			<top>320</top> <!-- Adjusted for better screen balance -->
+			<left>90</left>
+			
+			<!-- A. MAIN TITLE -->
+			<control type="label">
+				<width>1400</width>
+				<height>100</height>
+				<font>font60_bold</font> 
+				<label>$INFO[Container(5100).ListItem.Label]</label>
+				<textcolor>ffffffff</textcolor>
+				<shadowcolor>ff000000</shadowcolor>
+			</control>
 
-        <!-- 5. TOP PICKS (With working Diffuse) -->
+			<!-- B. CONSOLIDATED METADATA BAR (Smaller fonts, Centered Icons) -->
+			<control type="grouplist">
+				<top>110</top>
+				<height>32</height> <!-- Tight height for better alignment -->
+				<orientation>horizontal</orientation>
+				<itemgap>12</itemgap>
+				<aligny>center</aligny> <!-- Vertically centers everything in the row -->
+				
+				<!-- TMDb Icon -->
+				<control type="image">
+				    <top>10</top>
+					<width>32</width>
+					<height>20</height> <!-- Scaled to match text height -->
+					<aspectratio>keep</aspectratio>
+					<texture>icons/rating/tmdb.png</texture>
+				</control>
+
+				<!-- TMDb Rating Text -->
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font> <!-- Reduced font size -->
+					<textcolor>ccffffff</textcolor>
+					<label>$VAR[HeroRatingValueVar]</label>
+				</control>
+
+				<!-- Blue Dot -->
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ff50b8eb</textcolor> 
+					<label>•</label>
+				</control>
+
+				<!-- QUALITY FLAG -->
+				<control type="image">
+				    <top>10</top>
+					<width>45</width>
+					<height>22</height> <!-- Scaled to match text -->
+					<aspectratio>keep</aspectratio>
+					<texture>$VAR[HeroResolutionFlagVar]</texture>
+				</control>
+
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ff50b8eb</textcolor> 
+					<label>•</label>
+				</control>
+
+				<!-- Year -->
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ccffffff</textcolor>
+					<label>$INFO[Container(5100).ListItem.Year]</label>
+				</control>
+
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ff50b8eb</textcolor> 
+					<label>•</label>
+				</control>
+
+				<!-- MPAA Rating -->
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ccffffff</textcolor>
+					<label>$INFO[Container(5100).ListItem.MPAA]</label>
+				</control>
+
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ff50b8eb</textcolor> 
+					<label>•</label>
+				</control>
+
+				<!-- Duration (Cleaned up formatting) -->
+				<control type="label">
+					<width>auto</width>
+					<height>32</height>
+					<font>font12</font>
+					<textcolor>ccffffff</textcolor>
+					<!-- Use Duration(mins) to avoid the 00:00:00 format -->
+					<label>$INFO[Container(5100).ListItem.Duration(mins),, Mins]</label>
+				</control>
+			</control>
+
+			<!-- C. PLOT DESCRIPTION (Increased height to prevent cutoff) -->
+			<control type="textbox">
+				<top>165</top>
+				<width>1100</width>
+				<height>180</height> <!-- Increased height significantly -->
+				<font>font14</font>
+				<textcolor>ffffffff</textcolor>
+				<label>$INFO[Container(5100).ListItem.Plot]</label>
+				<linespacing>1.2</linespacing>
+				<align>justify</align>
+				<shadowcolor>ff000000</shadowcolor>
+				<autoscroll>true</autoscroll>
+			</control>
+		</control>
+
+        <!-- 5. TOP PICKS -->
         <control type="group">
-            <top>620</top>
+            <top>650</top> <!-- Shifted down slightly to match Hero -->
             <left>90</left>
             <control type="label">
                 <label>Top picks</label>
-                <font>font13_bold</font>
-                <textcolor>88ffffff</textcolor>
+                <font>fontMenu_bold</font>
+                <textcolor>ffffffff</textcolor>
             </control>
             <control type="panel" id="5100">
                 <top>80</top>
@@ -170,7 +262,6 @@
                 <onup>9000</onup>
                 <ondown>5200</ondown>
                 <orientation>horizontal</orientation>
-                <!-- Corrected layout width for spacing -->
                 <itemlayout width="460" height="260">
                     <control type="image">
                         <width>440</width>
@@ -183,15 +274,12 @@
                     <control type="group">
                         <animation effect="zoom" start="100" end="108" time="300" tween="quadratic" easing="out" center="auto">Focus</animation>
                         <animation effect="zoom" start="108" end="100" time="250" tween="quadratic" easing="out" center="auto">UnFocus</animation>
-                        
                         <control type="image">
                             <width>440</width>
                             <height>247</height>
                             <texture background="true" diffuse="common/rounded_mask_landscape.png">$INFO[ListItem.Art(landscape)]</texture>
                             <aspectratio>scale</aspectratio>
                         </control>
-
-                        <!-- Rounded Focus Glow -->
                         <control type="image">
                             <left>-10</left>
                             <top>-10</top>
@@ -208,7 +296,7 @@
 
         <!-- 6. YOUR APPS -->
         <control type="group">
-            <top>970</top> <!-- Lowered for better breathing room -->
+            <top>980</top>
             <left>90</left>
             <control type="label">
                 <label>Your apps</label>
@@ -225,7 +313,7 @@
                     <control type="image">
                         <width>150</width>
                         <height>150</height>
-                        <texture diffuse="common/squircle_mask.png">$INFO[ListItem.Icon]</texture>
+                        <texture diffuse="common/rounded_mask_landscape.png">$INFO[ListItem.Icon]</texture>
                         <aspectratio>keep</aspectratio>
                     </control>
                 </itemlayout>
@@ -235,7 +323,7 @@
                         <control type="image">
                             <width>150</width>
                             <height>150</height>
-                            <texture diffuse="common/squircle_mask.png">$INFO[ListItem.Icon]</texture>
+                            <texture diffuse="common/rounded_mask_landscape.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
                         <control type="image">
